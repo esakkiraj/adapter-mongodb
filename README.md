@@ -1,6 +1,6 @@
 # micro-analytics-adapter-mongodb
 
-This is an [Mongodb][] adapter for [micro-analytics][].
+This is an [mongodb](https://www.mongodb.com/) adapter for [micro-analytics](https://github.com/micro-analytics).
 
 ## Usage
 
