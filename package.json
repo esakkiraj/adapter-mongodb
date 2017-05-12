@@ -1,0 +1,30 @@
+{
+  "name": "micro-analytics-adapter-mongodb",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esakkiraj/adapter-mongodb.git"
+  },
+  "keywords": [
+    "micro-analytics",
+    "mongodb"
+  ],
+  "author": "Esakki Raj<esakkiraj.tce@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/esakkiraj/adapter-mongodb/issues"
+  },
+  "homepage": "https://github.com/esakkiraj/adapter-mongodb#readme",
+  "dependencies": {
+    "mongodb": "^2.2.26"
+  },
+  "devDependencies": {
+    "jest": "^20.0.0",
+    "micro-analytics-cli": "^2.1.0"
+  }
+}
