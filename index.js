@@ -45,7 +45,6 @@ async function getAll(options) {
   const paths = await keys();
   const eventStats = {};
 
-  console.log(paths);
   for(let i=0;i<paths.length;i++) {
     const path = paths[i];
 
@@ -53,7 +52,6 @@ async function getAll(options) {
       eventStats[path] = await put(path, { filter: options.filter });
     }
   }
-  console.log(eventStats);
 
   return eventStats;
 }
