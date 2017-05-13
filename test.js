@@ -1,27 +1,37 @@
-const MongoClient = require('mongodb').MongoClient;
+const MClient = require('mongodb').MongoClient;
 const test = require('micro-analytics-cli/adapter-tests/unit-tests');
 const path = require('path');
 
-const URL = `mongodb://localhost:27017/anlyticsdb`;
+const collectionName = process.env.MAA_MONGODB_COLLECTION_NAME || 'ma-events';
+const URL = process.env.MAA_MONGODB_URL;
 
-async function runTest() {
+let DB;
 
-  var Clinent = MongoClient .connect(URL)
-    .then(function(connection) {
-      const db = connection;
 
-      test({
-        name: 'mongodb',
-        modulePath: path.resolve(__dirname, './index.js'),
-        afterAll: async (adapter) => {
-          await db.close()
-        }
-      })
+async function getMACollection() {
+  if(!DB) {
+    DB = await MClient.connect(URL); 
+  }
+  return await DB.collection(collectionName);
+}
 
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
+function runTest() {
+
+  test({
+    name: 'mongodb',
+    modulePath: path.resolve(__dirname, './index.js'),
+    beforeEach: async (adapter) => {
+      const collection = await getMACollection();
+      return await collection.deleteMany({});
+    },
+    afterAll: async (adapter) => {
+      const collection = await getMACollection();
+      await collection.deleteMany({});
+      await collection.drop();
+
+      return adapter.close();
+    }
+  });
 
 }
 
