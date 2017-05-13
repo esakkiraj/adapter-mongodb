@@ -1,24 +1,18 @@
 const MClient = require('mongodb').MongoClient;
 
-//TODO: Parse configs from args
+const collectionName = 'ma-events';
+const URL = process.env.MAA_MONGODB_URL;
 
-const URL = `mongodb://localhost:27017/analyticsdb`;
-const colectionName = 'ma-events';
+let DB;
 
-let db; // DB Instance
 
-MClient
-  .connect(URL)
-  .then(function(connection) {
-    db = connection;
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
-
-function getMACollection() {
-  return db.collection('ma-events');
+async function getMACollection() {
+  if(!DB) {
+    DB = await MClient.connect(URL); 
+  }
+  return DB.collection(collectionName);
 }
+
 function get(key, options) {
 
   return getMACollection()
@@ -61,10 +55,20 @@ function has(key) {
 function keys() {
   return getMACollection().find({}).toArray().then(function(events) { return events.map((event) => event.pathname); });
 }
+
+function deleteAll() {
+  return getMACollection.deleteMany({});
+}
+function close() {
+  return DB.close();
+}
 module.exports = {
   get,
   put,
   getAll,
   has,
-  keys
+  keys,
+
+  deleteAll,
+  close
 };
