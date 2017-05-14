@@ -1,7 +1,7 @@
 const MClient = require('mongodb').MongoClient;
 
 const collectionName = process.env.MAA_MONGODB_COLLECTION_NAME || 'ma-events';
-const URL = process.env.MAA_MONGODB_URL;
+const URL = process.env.MAA_MONGODB_URL || `mongodb://127.0.0.1:27017/ma-analyticsdb-test`;
 
 let DB;
 
